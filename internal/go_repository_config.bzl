@@ -91,7 +91,9 @@ def _find_macro_file_labels(ctx, label):
         if i < 0:
             continue
         line = line[:i].lstrip()
-        macro_label = Label("@" + label.workspace_name + "//:" + line)
+        if ":" not in line:
+            line = ":" + line
+        macro_label = Label("@" + label.workspace_name + "//" + line)
         if macro_label not in seen:
             seen[macro_label] = None
             files.append(macro_label)
